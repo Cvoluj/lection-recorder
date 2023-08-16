@@ -28,24 +28,28 @@ class JSONHandler:
         except Exception as e:
             print(f'There no such day in calendar')
             return []
-
-    def get_times(self):
-        day = self.get_current_day()
-        times = []
-        for index in day['time']:
-            index = index.split('-')[0]
-            times.append(index)
-
-        return times
     
+    def get_times(self):
+        result = []
+        for index in self.get_current_day()['time']:
+            index = index.split('-')[0]
+            result.append(index)
+        return result
+
+    
+    def get_links(self):
+        return self.get_current_day()['links']
+
     def __call__(self):
         """
-        return list with times when you need to join lecture
+        return times and links to join lecture
         """
-        return self.get_times()
+        return self.get_times(), self.get_links()
 
 if __name__ == '__main__':
     json_handler = JSONHandler('calendar.json')
-    print(json_handler())
-    print(json_handler.get_current_day())
-    print(json_handler.read_file())
+    times, links = json_handler()
+    print(times)
+    print(links)
+    # print(json_handler.get_current_day())
+    # print(json_handler.read_file())
