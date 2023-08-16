@@ -32,7 +32,7 @@ class JSONHandler:
     def get_times(self):
         day = self.get_current_day()
         times = []
-        for index in day:
+        for index in day['time']:
             index = index.split('-')[0]
             times.append(index)
 
@@ -47,3 +47,5 @@ class JSONHandler:
 if __name__ == '__main__':
     json_handler = JSONHandler('calendar.json')
     print(json_handler())
+    print(json_handler.get_current_day())
+    print(json_handler.read_file())
