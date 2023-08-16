@@ -18,7 +18,7 @@ class JSONHandler:
             print("Error: JSON decoding failed.")
             return {}
     
-    def get_current_day(self):
+    def get_current_day(self) -> dict:
         
         current_day = datetime.now().strftime('%A')
         data = self.read_file()
@@ -29,7 +29,7 @@ class JSONHandler:
             print(f'There no such day in calendar')
             return []
     
-    def get_times(self):
+    def get_times(self) -> list:
         result = []
         for index in self.get_current_day()['time']:
             index = index.split('-')[0]
@@ -37,7 +37,7 @@ class JSONHandler:
         return result
 
     
-    def get_links(self):
+    def get_links(self) -> list: 
         return self.get_current_day()['links']
 
     def __call__(self):
