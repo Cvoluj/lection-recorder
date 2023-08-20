@@ -2,6 +2,7 @@
 .venv
 live.py
 calendar.json
+extended.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
