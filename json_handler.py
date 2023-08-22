@@ -15,8 +15,7 @@ class JSONHandler:
             print("Error: File not found.")
         except json.JSONDecodeError:
             print("Error: JSON decoding failed.")
-
-    
+ 
     def refresh_data(self):
         self.read_file()
 
@@ -32,25 +31,33 @@ class JSONHandler:
             print(f'There no such day in calendar')
             return []
     
-    def get_times(self) -> list:
+    def get_times(self, index_=0) -> list:
         result = []
-        for index in self.get_current_day()['time']:
-            index = index.split('-')[0]
-            result.append(index)
+        for time in self.get_current_day()['time']:
+            time = time.split('-')[index_]
+            result.append(time)
         return result
 
-    
     def get_links(self) -> list: 
         return self.get_current_day()['links']
     
-    def get_time_with_links(self) -> dict:
+    def get_subjects(self) -> list:
+        return self.get_current_day()['subject']
+    
+    def get_end_time(self):
+        return self.get_times(index_=1)
+        
+
+    def get_time_with_data(self) -> dict:
         """
         return dictionary as {time: link} 
         """
-        time_with_link = dict()
-        for time_, link in zip(self.get_times(), self.get_links()):
-            time_with_link[time_] = link
-        return time_with_link
+        time_with_data = dict()
+        for time_, link, end_time, subject in zip(self.get_times(), self.get_links(), self.get_end_time(), self.get_subjects()):
+            time_with_data[time_] = {'link': link, 
+                                     'end_time': end_time, 
+                                     'subject': subject}
+        return time_with_data
 
     def __call__(self):
         """
@@ -61,8 +68,11 @@ class JSONHandler:
 if __name__ == '__main__':
     json_handler = JSONHandler('calendar.json')
     times, links = json_handler()
-    time_with_links = json_handler.get_time_with_links()
+    time_with_links = json_handler.get_time_with_data()
     print(times)
     print(links)
+    subject = json_handler.get_subjects()
+    print(subject)
+    print(json_handler.get_end_time())
     # print(json_handler.get_current_day())
     # print(json_handler.read_file())
