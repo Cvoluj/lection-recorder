@@ -1,7 +1,7 @@
 # lection-recorder
 Simple recorder script for recording lectures, streams etc. at current time during week
 # Unrealised
-This project still in developing, but now it has all main features that I wanted realse. Feel free to do same and improve it, if you interested
+This project still in developing, but now it has all main features that I wanted realise. Feel free to do same and improve it, if you interested
 # Features
 * Automated lecture recording based on a predefined schedule.
 * Easy configuration through a JSON file.
