@@ -3,20 +3,21 @@ from dotenv import load_dotenv
 import os
 import time
 from datetime import datetime
+import pyautogui
 
-load_dotenv()
-host = 'localhost'
-port = int(os.getenv('PORT'))
-password = os.getenv('OBS_PASSWORD')
+
 
 
 class Recorder():
-    def __init__(self, main_directory):
+    def __init__(self, main_directory, port, password):
         self.main_directory = main_directory
         self.prepare = 1.9
+        self.port = port
+        self.password = password
+        self.host = 'localhost'
 
     def record(self, folder: str, end_time: str):
-        ws = obsws(host, port, password)
+        ws = obsws(self.host, self.port, self.password)
         ws.connect()
 
         try:
@@ -32,6 +33,12 @@ class Recorder():
                         time.sleep(3)  # Check every second
                     ws.call(requests.StopRecording())
                     print("Recording stopped.")
+                    try:
+                        pyautogui.click('buttons/exit.PNG')
+                        print("Leaved Zoom  meeting")
+                    except Exception as e:
+                        print("Don't found exit button")
+                    
                 else:
                     print("Failed to start recording.")
             else:
@@ -42,4 +49,4 @@ class Recorder():
 
 if __name__ == '__main__':
     recorder = Recorder(main_directory='D:/OBS/lection-recorder-bot/')
-    recorder.record('test', '13:06')
+    recorder.record('test', '15:59')

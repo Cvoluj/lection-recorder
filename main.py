@@ -1,49 +1,33 @@
 from json_handler import JSONHandler
-from datetime import datetime
-import time
-import webbrowser
+from event_scheduler import EventSchedule
+from recorder import Recorder
+from dotenv import load_dotenv
+import os
+import subprocess
 
 
-class EventSchedule():
-    def __init__(self, json_handler: JSONHandler):
-        self.json_handler = json_handler
-        self.time_with_link = dict()
 
-    def refresh_data(self):
-        self.json_handler.read_file()  
-        self.time_with_link = self.json_handler.get_time_with_data()
+load_dotenv()
+host = 'localhost'
+port = int(os.getenv('PORT'))
+password = os.getenv('OBS_PASSWORD')
+obs_path = os.getenv('OBS_PATH')
 
-    def get_current_time(self):
-        current_time = datetime.now().strftime('%H:%M')
-        if current_time in self.time_with_link.keys():
-            return current_time
-        return None
-        
-    def open_link(self, link):
-        if link is not None:
-            try:
-                webbrowser.open_new_tab(link)
-                print(f"opened {link}")
-                return True
-            except Exception as e:
-                print(f'link is not valid {e}')
-        else: print('link is None')         
+def process_exists(process_name):
+    call = 'TASKLIST /FI "imagename eq %s"' % process_name
+    output = subprocess.check_output(call, shell=True).decode('cp866')
+    last_line = output.strip().split('\r\n')[-1]
+    return last_line.lower().startswith(process_name.lower())
 
-    def do_job(self):
-        time_ = self.get_current_time()
-        if time_ is not None:
-            return self.open_link(self.time_with_link[time_])
+# go to obs directory, start obs64.exe and return to work directory
+current_directory = os.getcwd()
+if process_exists('obs64.exe'):
+    pass
+else:
+    os.chdir(obs_path)
+    os.startfile('obs64.exe')
+    os.chdir(current_directory)
 
-    def start(self):
-        while True:
-            self.refresh_data()
-            isOpened = self.do_job()
-            if isOpened:
-                time.sleep(60)
-            else:
-                time.sleep(10)
 
-if __name__ == '__main__':
-    
-    extended = EventSchedule(JSONHandler('calendar.json'))
-    extended.start()
+schedule = EventSchedule(JSONHandler('calendar.json'), Recorder(main_directory='D:/OBS/lection-recorder-bot/', port=port, password=password))
+schedule.start()
