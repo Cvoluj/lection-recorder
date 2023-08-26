@@ -43,13 +43,13 @@ python main.py
 * calendar.json: This JSON file contains the lecture schedule. Each day is associated with specific times, links, and subjects.
 * main_directory: This is a parameter in **main.py** that contains basic directory for saving videos
 * .env: requires such parameters as <br>
-OBS_PASSWORD - stores in OBS webhook <br>
+OBS_PASSWORD - stores in OBS websocket <br>
 OBS_PATH - path to your obs64.exe for example C:/Program Files/obs-studio/bin/64bit/ <br> 
-PORT - stores in OBS webhook
+PORT - stores in OBS websocket
 # Dependencies
 * Python 3.x
 * x64 version of OBS
-* **IMPORTANT** - use OBS version compatible with webhook version 4.9.1
+* **IMPORTANT** - use OBS version compatible with websocket version 4.9.1
 personally, I use: 
     [obs-websocket 4.9.1](https://github.com/obsproject/obs-websocket/releases/tag/4.9.1), 
     [OBS Studio 27.2.4](https://github.com/obsproject/obs-studio/releases/tag/27.2.4)
