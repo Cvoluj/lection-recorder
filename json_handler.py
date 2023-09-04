@@ -19,13 +19,22 @@ class JSONHandler:
     def refresh_data(self):
         self.read_file()
 
+    def get_current_week(self) -> str:
+        current_week = int(datetime.now().strftime('%U'))
+        if current_week % 2 == 0:
+            return 'even_week'
+        else:
+            return 'odd_week'
+
     def get_current_day(self) -> dict:
         self.read_file()
         data = self.data_from_json
         
         current_day = datetime.now().strftime('%A')
+        current_week = self.get_current_week()
+        
         try:
-            day_from_json = data[current_day]
+            day_from_json = data[current_day][current_week]
             return day_from_json
         except Exception as e:
             print(f'There no such day in calendar')
