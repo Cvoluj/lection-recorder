@@ -23,12 +23,17 @@ Modify the calendar.json file to match your desired lecture schedule:
 ```
 {
     "Monday": {
-        "time": ["11:25-12:40", "12:55-13:35"], 
-        "links": ["https://youtube.com", "https://www.twitch.tv/"],
-        "subject": ["math", "test_twitch"] // It's a folder in which will be saved recording
+        "even_week": { // if not matter what week just paste from even_week to odd_week
+            "time": ["12:25-11:40", "18:34-18:35"],
+            "links": ["https://youtube.com", "https://www.twitch.tv/"],
+            "subject": ["math", "test_twitch"] // It's a folder in which will be saved recording
+        },
+        "odd_week": {
+            "time": ["10:00-11:15", "14:30-15:45"],
+            "links": ["https://zoom.us", "https://google.com"],
+            "subject": ["english", "history"]
+        }
     },
-    // ... (other days)
-}
 ```
 
 Replace the example schedule with your own lecture days, times, links, and subjects. 
