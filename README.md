@@ -34,6 +34,7 @@ Modify the calendar.json file to match your desired lecture schedule:
             "subject": ["english", "history"]
         }
     },
+}
 ```
 
 Replace the example schedule with your own lecture days, times, links, and subjects. 
